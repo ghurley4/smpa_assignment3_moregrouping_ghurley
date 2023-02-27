@@ -79,6 +79,12 @@ impeach %>%
 ```{r}
 
 
+impeach %>%
+    filter(party == "D") %>%
+    group_by(for_impeachment, pct_bachelors_compared_to_national) %>%
+    summarize(count = n())
+
+
 
 
 
@@ -97,6 +103,10 @@ In other words, you want to end up with the calculated mean for what that percen
 
 ```{r}
 
+impeach %>%
+filter(party == "D") %>%
+  group_by(for_impeachment) %>%
+  summarize(mean_pct_bachelors = mean(pct_bachelors))
 
 
 
@@ -111,8 +121,10 @@ In other words, you want to end up with the calculated mean for what that percen
 The relevant column for that is `trump_percent`.
 
 ```{r}
-
-
+impeach %>%
+  filter(party == "D") %>%
+  group_by(for_impeachment) %>%
+  summarize(trump_percent = mean(trump_percent))
 
 
 
@@ -126,6 +138,11 @@ The relevant column for that is `trump_percent`.
 6)  Filter out only the members who are a yes for impeachment. Then of those "Yes" member, how many won their 2018 election by less than 5 percentage points (`margin_flag_2018`) vs. more?
 
 ```{r}
+
+impeach %>%
+    filter(party == "D" & for_impeachment == "YES")  %>%
+    group_by(margin_flag_2018) %>%
+  summarize(count = n())
 
   
 
@@ -141,7 +158,10 @@ The relevant column for that is `trump_percent`.
 
 ```{r}
 
-  
+impeach %>%
+    filter(party == "D" & for_impeachment == "YES")  %>%
+    group_by(flip) %>%
+  summarize(count = n())  
 
 
 
