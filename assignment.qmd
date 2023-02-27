@@ -160,7 +160,7 @@ impeach %>%
 
 impeach %>%
     filter(party == "D" & for_impeachment == "YES")  %>%
-    group_by(flip) %>%
+    group_by(flip_2018) %>%
   summarize(count = n())  
 
 
@@ -177,7 +177,11 @@ Use the mutate() function to create two new columns: one that extracts the year 
 
 ```{r}
 
-  
+new_collumns <- impeach  %>%
+mutate(year_announced = ifelse(for_impeachment == "YES", as.numeric(format(as.Date(date_announced), "%Y")), NA),
+         month_announced = ifelse(for_impeachment == "YES", as.numeric(format(as.Date(date_announced), "%m")), NA))
+
+
 
 
 
@@ -190,8 +194,14 @@ Use the mutate() function to create two new columns: one that extracts the year 
 8) Using the new columns you created in #7, use grouping to count up how many House Democrats during each month announced their support of impeachment.
 
 ```{r}
+new_collumns <- impeach  %>%
+   mutate(year_announced = ifelse(for_impeachment == "YES", as.numeric(format(as.Date(date_announced), "%Y")), NA),
+         month_announced = ifelse(for_impeachment == "YES", as.numeric(format(as.Date(date_announced), "%m")), NA))
 
-  
+month_counts <- new_collumns %>%
+  filter(for_impeachment == "YES") %>%
+  group_by(year_announced, month_announced) %>%
+  summarise(num_members = n())
 
 
 
