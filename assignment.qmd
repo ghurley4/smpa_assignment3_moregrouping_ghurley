@@ -43,7 +43,10 @@ Write your code using grouping in the chunks below to help answer the following 
 1)  How many members in the dataset favor impeachment vs. not (using the `for_impeachment` column)?
 
 ```{r}
-
+impeach %>%
+  group_by(for_impeachment) %>%
+  summarize(count = n())
+  
 
 
 
@@ -58,8 +61,11 @@ You'll want to ensure you do the grouping on both columns together, e.g. `group_
 ```{r}
 
 
-
-
+impeach %>%
+    filter(party == "D") %>%
+  group_by(for_impeachment, gdp_above_national) %>%
+  summarize(count = n()) 
+  
 
 
 
